@@ -4,7 +4,7 @@ import model.dao.DaoFactory;
 import model.dao.DepartmentDao;
 import model.entites.Department;
 
-public class application2 {
+public class Program2 {
 
 	public static void main(String[] args) {
 		
@@ -15,6 +15,10 @@ public class application2 {
 		departmentDao.insert(newDepartment);
 		System.out.println("Inserted! New id = "+ newDepartment.getId());
 
+		System.out.println("\n=== Teste 2: Department update ===");
+		departmentDao.update(newDepartment);
+		System.out.println("id = "+newDepartment.getId()+ " , name - " + newDepartment.getName());
+		
 	}
 
 }

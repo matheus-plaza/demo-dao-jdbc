@@ -20,6 +20,19 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 		this.conn = conn;
 	}
 
+//	PreparedStatement st = null;
+//	ResultSet rs = null;
+//	try {
+//		st = conn.prepareStatement(
+//				);
+//		
+//	}catch(SQLException e) {
+//		throw new DbException(e.getMessage());
+//	}finally {
+//		DB.closeStatement(st);
+//		DB.closeResultSet(rs);
+//	}	
+	
 	@Override
 	public void insert(Department obj) {
 		PreparedStatement st = null;
@@ -55,16 +68,31 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
 	@Override
 	public void update(Department obj) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"update department "
+					+"set name = ? "
+					+"where id = ? ",
+					PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, obj.getName());
+			st.setInt(2, obj.getId());
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
 
+	}
+	
 	@Override
 	public Department findById(Integer id) {
 		// TODO Auto-generated method stub
