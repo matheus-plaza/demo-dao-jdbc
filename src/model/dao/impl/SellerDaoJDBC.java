@@ -86,7 +86,7 @@ public class SellerDaoJDBC implements SellerDao{
 			rs = st.getGeneratedKeys();
 
 			if(rows > 0) {
-				System.out.println("Updated! ");
+				System.out.println("Update completed! ");
 				if(rs.next()) {
 					obj.setName(rs.getString("Name"));
 					obj.setEmail(rs.getString("Email"));
@@ -108,9 +108,28 @@ public class SellerDaoJDBC implements SellerDao{
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+			  "DELETE FROM seller "
+			 +"WHERE Id = ? "
+			);
+			
+			st.setInt(1, id);
+						
+			int rows = st.executeUpdate();
+
+			if(rows > 0) {
+				System.out.println("Delete completed! ");	
+			}
+			
+			
+		}catch(SQLException e){
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
+	}	
 
 	@Override
 	public Seller findById(Integer id) {
