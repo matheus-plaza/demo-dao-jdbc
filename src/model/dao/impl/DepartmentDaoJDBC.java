@@ -90,7 +90,23 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
 	@Override
 	public void deleteById(Integer id) {
-
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"delete from department where id = ?");
+			
+			st.setInt(1, id);
+			int rowsAffected = st.executeUpdate();
+			
+			if(rowsAffected > 0) {
+				System.out.println("Department deleted!");
+			}
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 	}
 	
 	@Override
